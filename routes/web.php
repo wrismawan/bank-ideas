@@ -19,7 +19,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-Route::get('/idea', 'IdeaController@show')->name('idea.name');
+Route::get('/idea/{id}', 'IdeaController@show')->name('idea.name');
 Route::post('/idea/store', 'IdeaController@store')->name('idea.store');
+Route::post('/idea/like/', 'IdeaController@like')->name('idea.like');
 
 Route::get('/admin/dashboard', 'AdminController@dashboard')->name('admin.dashboard');
