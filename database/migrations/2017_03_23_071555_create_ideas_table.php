@@ -18,7 +18,7 @@ class CreateIdeasTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->integer('like')->default(0);
-            $table->integer('unlike')->default(0);
+            $table->integer('skip')->default(0);
             $table->integer('viewed')->default(0);
             $table->timestamps();
         });
