@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 
 class IdeaController extends Controller
 {
-    public function show(Request $request) {
-        return view('show_idea');
+    public function show($id) {
+        $data['idea'] = Idea::find($id);
+
+        return view('show_idea')->with($data);
     }
 
     public function store(Request $request) {
@@ -17,6 +19,14 @@ class IdeaController extends Controller
         $newIdea->name = $request->name;
         $newIdea->description = $request->description;
         $newIdea->save();
+
+        return back();
+    }
+
+    public function like(Request $request) {
+        $idea = Idea::find($request->id);
+        $idea->like = $idea->like + 1;
+        $idea->save();
 
         return back();
     }

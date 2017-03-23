@@ -13,15 +13,29 @@
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
                 <div class="panel panel-default">
-                    <div class="panel-heading">KondanginYuk</div>
-
+                    <div class="panel-heading">{{$idea->name}}</div>
                     <div class="panel-body">
-                        <p>Platform online yang menyediakan informasi dan layanan kondangan bagi anak muda Indonesia secara utuh dari hulu ke hilir.</p>
-                        <a href="#" class="btn btn-success btn-lg col-xs-12" style="margin-bottom:10px">Like</a>
+                        <p>{{$idea->description}}</p>
+                        <a href="#" class="btn btn-success btn-lg col-xs-12" id="btn-like" style="margin-bottom:10px">Like</a>
                         <a href="#" class="btn btn-default btn-lg col-xs-12">Next</a>
                     </div>
+
+                    <form id="form-like" action="{{ route("idea.like") }}" method="POST">
+                        {!! csrf_field() !!}
+                        <input type="text" name="id" value="{{$idea->id}}">
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+@push('js')
+<script>
+    $(function (e) {
+        $("#btn-like").click(function (e) {
+            $("#form-like").submit();
+        })
+    })
+</script>
+@endpush
