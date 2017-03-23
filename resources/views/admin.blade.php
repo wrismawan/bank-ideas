@@ -40,9 +40,9 @@
                             <tr>
                                 <td>{{$idea->name}}</td>
                                 <td>{{$idea->description}}</td>
-                                <td>1000</td>
-                                <td>100</td>
-                                <td>45</td>
+                                <td>{{$idea->like}}</td>
+                                <td>{{$idea->skip}}</td>
+                                <td>{{$idea->viewed}}</td>
                                 <td>90%</td>
                             </tr>
                             @endforeach
