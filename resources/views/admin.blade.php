@@ -29,23 +29,23 @@
                     <div class="panel-body">
                         <table class="table table-responsive">
                             <tr>
-                                <th>#</th>
                                 <th>Name</th>
                                 <th>Description</th>
+                                <th>like</th>
+                                <th>skip</th>
+                                <th>viewed</th>
                                 <th>%</th>
                             </tr>
+                            @foreach($ideas as $idea)
                             <tr>
-                                <td>1</td>
-                                <td>AntriYuk</td>
-                                <td>Mobileapps yang membantu pengantre untuk mengamankan posisi antriannya sehingga bebas melakukan kegiatan selama masa antrean</td>
+                                <td>{{$idea->name}}</td>
+                                <td>{{$idea->description}}</td>
+                                <td>1000</td>
+                                <td>100</td>
+                                <td>45</td>
                                 <td>90%</td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>AntriYuk</td>
-                                <td>Mobileapps yang membantu pengantre untuk mengamankan posisi antriannya sehingga bebas melakukan kegiatan selama masa antrean</td>
-                                <td>90%</td>
-                            </tr>
+                            @endforeach
                         </table>
                     </div>
 
