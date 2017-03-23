@@ -14,3 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+
+Route::get('/idea', 'IdeaController@show');
+Route::get('/admin', 'AdminController@dashboard');
