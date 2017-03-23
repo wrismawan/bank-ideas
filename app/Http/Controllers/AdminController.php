@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Idea;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
     public function dashboard(Request $request) {
-        return view('admin');
+
+        $data['ideas'] = Idea::all();
+
+        return view('admin')->with($data);
+
     }
+
+
 }

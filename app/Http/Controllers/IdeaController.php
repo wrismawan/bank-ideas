@@ -20,4 +20,6 @@ class IdeaController extends Controller
 
         return back();
     }
+
+
 }
