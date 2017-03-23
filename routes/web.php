@@ -19,7 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-Route::get('/idea/{id}', 'IdeaController@show')->name('idea.name');
+Route::get('/idea/{id}', 'IdeaController@show')->name('idea.show');
 Route::post('/idea/store', 'IdeaController@store')->name('idea.store');
 Route::post('/idea/like/', 'IdeaController@like')->name('idea.like');
 

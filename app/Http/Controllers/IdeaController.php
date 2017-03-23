@@ -28,6 +28,6 @@ class IdeaController extends Controller
         $idea->like = $idea->like + 1;
         $idea->save();
 
-        return back();
+        return redirect()->route('idea.show', [$request->id+1]);
     }
 }
