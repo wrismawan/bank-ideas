@@ -28,3 +28,5 @@ Route::get('/admin/dashboard', 'AdminController@dashboard')->name('admin.dashboa
 /* Social Auth */
 Route::get('/redirect', 'SocialAuthController@redirect')->name('social.redirect');
 Route::get('/callback', 'SocialAuthController@callback')->name('social.callback');
+Route::post('import', 'AdminController@import');
+

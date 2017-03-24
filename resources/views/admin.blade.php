@@ -26,6 +26,26 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
+                <nav class="navbar navbar-default">
+
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">Import & Export Ideas to Excel </a>
+                    </div>
+                </div>
+            </nav>
+                <form style="border-top: 1px solid #a1a1a1; margin-top: 15px;margin-bottom: 15px;padding: 10px;" action="{{ URL::to('import') }}" class="form-horizontal" method="post" enctype="multipart/form-data">
+                    <input type="file" name="import_file" />
+                    <button style="margin-top: 5px" class="btn btn-primary">Import File</button>
+                    {{ csrf_field() }}
+                </form>
+
+            </div>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
                     <div class="panel-body">
                         <table class="table table-responsive">
                             <tr>
