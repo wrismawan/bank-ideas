@@ -40,12 +40,4 @@ class IdeaController extends Controller
         $idea->{$type} = $idea->{$type} + 1;
         $idea->save();
     }
-
-    public function skip(Request $request) {
-        $idea = Idea::find($request->id);
-        $idea->skip = $idea->skip + 1;
-        $idea->save();
-
-        return redirect()->route('idea.show', [$request->id+1]);
-    }
 }
