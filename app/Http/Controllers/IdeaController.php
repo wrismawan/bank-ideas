@@ -9,7 +9,7 @@ class IdeaController extends Controller
 {
     public function show($id) {
         $data['idea'] = Idea::find($id);
-
+        $this->updateCounter($id, 'viewed');
         return view('show_idea')->with($data);
     }
 
@@ -24,10 +24,20 @@ class IdeaController extends Controller
     }
 
     public function like(Request $request) {
-        $idea = Idea::find($request->id);
-        $idea->like = $idea->like + 1;
-        $idea->save();
+        $this->updateCounter($request->id, 'like');
+        $nextIdea = Idea::next();
+        return redirect()->route('idea.show', [$nextIdea->id]);
+    }
 
-        return redirect()->route('idea.show', [$request->id+1]);
+    public function skip(Request $request) {
+        $this->updateCounter($request->id, 'skip');
+        $nextIdea = Idea::next();
+        return redirect()->route('idea.show', [$nextIdea->id]);
+    }
+
+    private function updateCounter($id, $type) {
+        $idea = Idea::find($id);
+        $idea->{$type} = $idea->{$type} + 1;
+        $idea->save();
     }
 }
