@@ -11,25 +11,17 @@
 |
 */
 
-/*
-Route::get('/', function () {
-    $nextIdea = \App\Idea::next();
-    return redirect()->route('idea.show', [$nextIdea->id]);
-});
-*/
-
 Auth::routes();
 
+Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('/', function (){
-    return redirect()->route('idea.show',[1]);
-})->name('ten_idea');
-
-
-Route::get('/idea/{id}', 'IdeaController@show')->name('idea.show');
-Route::post('/idea/store', 'IdeaController@store')->name('idea.store');
-Route::post('/idea/like/', 'IdeaController@like')->name('idea.like');
-Route::post('/idea/skip/', 'IdeaController@skip')->name('idea.skip');
+Route::group(['middleware' => 'auth'], function () {
+    Route::post('/idea/store', 'IdeaController@store')->name('idea.store');
+    Route::post('/idea/like/', 'IdeaController@like')->name('idea.like');
+    Route::post('/idea/skip/', 'IdeaController@skip')->name('idea.skip');
+    Route::get('/idea/next', 'IdeaController@next')->name('idea.next');
+    Route::get('/idea/{id}', 'IdeaController@show')->name('idea.show');
+});
 
 Route::get('/admin/dashboard', 'AdminController@dashboard')->name('admin.dashboard');
 

@@ -13,26 +13,27 @@ class IdeaController extends Controller
         return view('show_idea')->with($data);
     }
 
-    public function store(Request $request) {
+    public function next() {
+        $nextIdea = Idea::next();
+        return redirect()->route('idea.show', [$nextIdea->id]);
+    }
 
+    public function store(Request $request) {
         $newIdea = new Idea();
         $newIdea->name = $request->name;
         $newIdea->description = $request->description;
         $newIdea->save();
-
         return back();
     }
 
     public function like(Request $request) {
         $this->updateCounter($request->id, 'like');
-        $nextIdea = Idea::next();
-        return redirect()->route('idea.show', [$nextIdea->id]);
+        return redirect()->route('idea.next');
     }
 
     public function skip(Request $request) {
         $this->updateCounter($request->id, 'skip');
-        $nextIdea = Idea::next();
-        return redirect()->route('idea.show', [$nextIdea->id]);
+        return redirect()->route('idea.next');
     }
 
     private function updateCounter($id, $type) {

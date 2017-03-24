@@ -7,7 +7,6 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
-                    <!--
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
 
@@ -61,19 +60,7 @@
                                 </a>
                             </div>
                         </div>
-                    </form> -->
-                        <div class="row">
-                            <div class="col-md-7 col-md-offset-2">
-                                @include('layouts.flash-messages')
-                            </div>
-                            <div class="col-md-9 col-md-offset-1">
-                                <ul>
-                                    <li>
-                                        <a href="{{ action('LoginController@auth', ['provider' => 'facebook']) }}" class="btn btn-block">login with Facebook</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                    </form>
                 </div>
             </div>
         </div>
