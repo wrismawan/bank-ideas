@@ -39,3 +39,5 @@ Route::get('login/{provider}', 'LoginController@auth')
     ->where(['provider' => 'facebook']);
 Route::get('login/{provider}/callback', 'LoginController@login')
     ->where(['provider' => 'facebook']);
+
+Route::post('import', 'AdminController@import');

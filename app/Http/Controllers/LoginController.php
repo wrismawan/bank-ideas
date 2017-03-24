@@ -22,7 +22,7 @@ class LoginController extends Controller
 
     public function showIdea()
     {
-        return redirect()->route('polling');
+        return redirect()->route('ten_idea');
     }
 
     public function auth($provider)
@@ -33,7 +33,7 @@ class LoginController extends Controller
     public function login($provider)
     {
         try {
-            $this->loginUser->login($provider);
+            $this->loginuser->login($provider);
             return redirect()->action('LoginContoller@showIdea');
         } catch (SocialAuthException $e) {
             return redirect()->action('LoginContoller@showLoginPage')
