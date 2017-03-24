@@ -19,8 +19,7 @@
                         <a href="#" class="btn btn-success btn-lg col-xs-12 btn-action" data-type="like" style="margin-bottom:10px">Like</a>
                         <a href="#" class="btn btn-default btn-lg col-xs-12 btn-action" data-type="skip">Skip</a>
                     </div>
-
-                    <form id="form-action" action="{{ route("idea.like") }}" method="POST" style="display: none">
+                    <form id="form-action" action="#" method="POST" style="display: none">
                         {!! csrf_field() !!}
                         <input type="text" name="id" value="{{$idea->id}}">
                     </form>
