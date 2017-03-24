@@ -8,7 +8,10 @@ use Illuminate\Http\Request;
 class IdeaController extends Controller
 {
     public function show($id) {
-        $data['idea'] = Idea::find($id);
+        $idea = Idea::find($id);
+        $idea->viewed = $idea->viewed + 1;
+        $idea->save();
+        $data['idea'] = $idea;
 
         return view('show_idea')->with($data);
     }
