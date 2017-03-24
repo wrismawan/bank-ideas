@@ -8,37 +8,37 @@ use Illuminate\Http\Request;
 class IdeaController extends Controller
 {
     public function show($id) {
-        $idea = Idea::find($id);
-        $idea->viewed = $idea->viewed + 1;
-        $idea->save();
-        $data['idea'] = $idea;
-
+        $data['idea'] = Idea::find($id);
+        $this->updateCounter($id, 'viewed');
         return view('show_idea')->with($data);
     }
 
-    public function store(Request $request) {
+    public function next() {
+        $nextIdea = Idea::next();
+        return redirect()->route('idea.show', [$nextIdea->id]);
+    }
 
+    public function store(Request $request) {
         $newIdea = new Idea();
         $newIdea->name = $request->name;
         $newIdea->description = $request->description;
         $newIdea->save();
-
         return back();
     }
 
     public function like(Request $request) {
-        $idea = Idea::find($request->id);
-        $idea->like = $idea->like + 1;
-        $idea->save();
-
-        return redirect()->route('idea.show', [$request->id+1]);
+        $this->updateCounter($request->id, 'like');
+        return redirect()->route('idea.next');
     }
 
     public function skip(Request $request) {
-        $idea = Idea::find($request->id);
-        $idea->skip = $idea->skip + 1;
-        $idea->save();
+        $this->updateCounter($request->id, 'skip');
+        return redirect()->route('idea.next');
+    }
 
-        return redirect()->route('idea.show', [$request->id+1]);
+    private function updateCounter($id, $type) {
+        $idea = Idea::find($id);
+        $idea->{$type} = $idea->{$type} + 1;
+        $idea->save();
     }
 }
