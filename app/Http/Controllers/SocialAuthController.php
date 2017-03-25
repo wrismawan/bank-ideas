@@ -15,17 +15,25 @@ class SocialAuthController extends Controller
 
     public function callback() {
         $providerUser = Socialite::driver('facebook')->user();
-        $user = User::where('email', $providerUser->user['email'])->first();
-        if (is_null($user)) {
-            $user = new User();
-            $user->name = $providerUser->user['name'];
-            $user->email = $providerUser->user['email'];
-            $user->fb_id = $providerUser->user['id'];
-            $user->password = bcrypt(str_random(10));
-            $user->save();
+
+        $user = User::where('fb_id', $providerUser->id)->first();
+        if (is_null($user) ) {
+            $user = $this->createUser($providerUser);
         }
+
         Auth::login($user);
-        return redirect()->route('idea.next');
+        return redirect('idea/next?message=how-to');
+    }
+
+    private function createUser($providerUser) {
+        $user = new User();
+        $user->name = $providerUser->name;
+        $user->email = is_null($providerUser->email) ? bcrypt(str_random(10))."@".str_random(10).".com" : $providerUser->email;
+        $user->fb_id = $providerUser->id;
+        $user->password = bcrypt(str_random(10));
+        $user->save();
+
+        return $user;
     }
 
 }
