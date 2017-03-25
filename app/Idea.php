@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Idea extends Model
 {
@@ -11,6 +12,10 @@ class Idea extends Model
     public $fillable = ['name','description'];
 
     public static function next() {
-        return Idea::orderBy('viewed')->first();
+        $userActions = \App\UserAction::where('user_id', Auth::id())->get();
+        $ideas = [];
+        foreach ($userActions as $userAction) { array_push($ideas, $userAction->idea_id); }
+        return Idea::whereNotIn('id', $ideas)->orderBy('viewed')->first();
     }
+
 }

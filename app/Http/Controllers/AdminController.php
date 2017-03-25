@@ -25,7 +25,11 @@ class AdminController extends Controller
             $data = Excel::load($path, function($reader){})->get();
             if(!empty($data) && $data->count()){
                 foreach ($data as $key =>$value) {
-                    $insert[] = ['name' => $value->name, 'description' => $value->description];
+                    $insert[] = [
+                        'name' => $value->name,
+                        'description' => $value->description,
+                        'owner' => $value->owner
+                    ];
                 }
                 if(!empty($insert)){
                     DB::table('ideas')->insert($insert);

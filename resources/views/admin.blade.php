@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Dashboard</div>
+                    <div class="panel-heading">Your Awesome Idea</div>
                     <form action="{{ route('idea.store') }}" method="POST">
                         {!! csrf_field() !!}
                         <div class="panel-body">
@@ -30,7 +30,7 @@
 
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#">Import & Export Ideas to Excel </a>
+                        <a class="navbar-brand" href="#">Import & Export Ideas From Excel/CSV </a>
                     </div>
                 </div>
             </nav>

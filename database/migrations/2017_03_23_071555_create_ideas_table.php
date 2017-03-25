@@ -17,6 +17,7 @@ class CreateIdeasTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description');
+            $table->text('owner');
             $table->integer('like')->default(0);
             $table->integer('skip')->default(0);
             $table->integer('viewed')->default(0);

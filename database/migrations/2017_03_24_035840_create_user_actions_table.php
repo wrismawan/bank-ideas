@@ -15,8 +15,9 @@ class CreateUserActionsTable extends Migration
     {
         Schema::create('user_actions', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id');
             $table->integer('idea_id')->default(0);
-            $table->integer('val');
+            $table->integer('val')->default(0);
             $table->timestamps();
         });
     }

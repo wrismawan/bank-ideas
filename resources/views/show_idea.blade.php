@@ -16,8 +16,8 @@
                     <div class="panel-heading"><h3 class="text-center">{{$idea->name}}</h3></div>
                     <div class="panel-body">
                         <p>{{$idea->description}}</p>
-                        <a href="#" class="btn btn-success btn-lg col-xs-12 btn-action" data-type="like" style="margin-bottom:10px">Like</a>
-                        <a href="#" class="btn btn-default btn-lg col-xs-12 btn-action" data-type="skip">Skip</a>
+                        <a href="#" class="btn btn-success btn-lg col-xs-12 btn-action" data-type="like" style="margin-bottom:10px">Yep!</a>
+                        <a href="#" class="btn btn-default btn-lg col-xs-12 btn-action" data-type="skip">Nope</a>
                     </div>
                     <form id="form-action" action="#" method="POST" style="display: none">
                         {!! csrf_field() !!}
