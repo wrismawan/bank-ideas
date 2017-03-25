@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@push('css')
+<link rel="stylesheet" href="{{asset('plugins/datatables/dataTables.bootstrap.css')}}">
+@endpush
 @section('content')
     <div class="container">
         <div class="row">
@@ -11,6 +14,9 @@
                         <div class="panel-body">
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Your Startup Name" name="name"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Your Email as an Owner" name="owner"/>
                             </div>
                             <div class="form-group">
                                 <textarea class="form-control" placeholder="Your Elevator Pitch Here.." name="description"></textarea>
@@ -47,25 +53,32 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <table class="table table-responsive">
-                            <tr>
+                        <table class="table table-responsive" id="ideas-table">
+                            <thead>
                                 <th>Name</th>
                                 <th>Description</th>
-                                <th>like</th>
-                                <th>skip</th>
-                                <th>viewed</th>
-                                <th>%</th>
-                            </tr>
+                                <th><i class="em em-boy"></i></th>
+                                <th><i class="em em-white_check_mark"></i></th>
+                                <th><i class="em em-broken_heart"></i></th>
+                                <th><i class="em em-eyes"></i></th>
+                                <th><i class="em em-heart"></i></th>
+                            </thead>
+                            <tbody>
                             @foreach($ideas as $idea)
                             <tr>
                                 <td>{{$idea->name}}</td>
                                 <td>{{$idea->description}}</td>
+                                <td>{{$idea->owner}}</td>
                                 <td>{{$idea->like}}</td>
                                 <td>{{$idea->skip}}</td>
                                 <td>{{$idea->viewed}}</td>
-                                <td>90%</td>
+                                <td><?php $likeable = $idea->like == 0 ? 0 : number_format(floatval($idea->like) * 100 / floatval($idea->viewed), 2);
+                                    echo "{$likeable}%";
+                                ?>
+                                </td>
                             </tr>
                             @endforeach
+                            </tbody>
                         </table>
                     </div>
 
@@ -74,3 +87,13 @@
         </div>
     </div>
 @endsection
+
+@push('js')
+<script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
+<script>
+    $(function() {
+        $("#ideas-table").DataTable();
+    });
+</script>
+@endpush

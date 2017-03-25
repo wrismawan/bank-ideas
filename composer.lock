@@ -860,16 +860,16 @@
         },
         {
             "name": "maatwebsite/excel",
-            "version": "2.1.11",
+            "version": "2.1.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Maatwebsite/Laravel-Excel.git",
-                "reference": "4b0f3033ee339426810d4aeb497b862db78fa83f"
+                "reference": "46f1f9168202877d2d9c570042af315567b268c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Excel/zipball/4b0f3033ee339426810d4aeb497b862db78fa83f",
-                "reference": "4b0f3033ee339426810d4aeb497b862db78fa83f",
+                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Excel/zipball/46f1f9168202877d2d9c570042af315567b268c0",
+                "reference": "46f1f9168202877d2d9c570042af315567b268c0",
                 "shasum": ""
             },
             "require": {
@@ -924,7 +924,7 @@
                 "import",
                 "laravel"
             ],
-            "time": "2017-03-23T20:30:30+00:00"
+            "time": "2017-03-24T12:44:02+00:00"
         },
         {
             "name": "monolog/monolog",

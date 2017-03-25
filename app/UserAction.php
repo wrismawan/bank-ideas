@@ -9,7 +9,7 @@ class UserAction extends Model
 {
     protected $table = "user_actions";
 
-    public static $LIMIT = 2;
+    public static $LIMIT = 5;
 
     public static function count() {
         return UserAction::where('user_id', Auth::id())->count();

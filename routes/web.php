@@ -37,7 +37,7 @@ Route::post('import', 'AdminController@import');
 Route::get('/test', function () {
     $userActions = \App\UserAction::where('user_id', 1)->get();
     $ideas = [];
-    foreach ($userActions as $userAction) { array_push($ideas, $userAction->idea_id); }
+    return \App\Idea::whereNotIn('id', $ideas)->orderBy('viewed')->inRandomOrder()->first();
     return $ideas;
 });
 
