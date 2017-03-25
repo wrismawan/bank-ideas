@@ -21,6 +21,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/idea/skip/', 'IdeaController@skip')->name('idea.skip');
     Route::get('/idea/next', 'IdeaController@next')->name('idea.next');
     Route::get('/idea/more', 'IdeaController@wantMore')->name('idea.more');
+    Route::get('/idea/try', 'IdeaController@trySubmit')->name('idea.try');
     Route::get('/idea/{id}', 'IdeaController@show')->name('idea.show');
 
 });

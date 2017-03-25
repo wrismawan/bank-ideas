@@ -32,10 +32,25 @@
 @push('js')
 <script>
     $(function (e) {
+        mixpanel.identify("{{ Auth::user()->fb_id }}");
+
+        mixpanel.people.set({
+            "$name" : "{{ Auth::user()->name }}",
+            "$email": "{{ Auth::user()->email }}",
+            "$created": "{{ Auth::user()->created_at }}",
+            "$last_login": new Date(),
+        });
+
         $(".btn-action").click(function (e) {
             type = $(this).data('type');
             url = type == 'like' ? '{{ route('idea.like') }}' : '{{ route('idea.skip') }}';
             $("#form-action").attr('action', url).submit();
+
+            if (type == 'like') {
+                mixpanel.track("Like");
+            } else {
+                mixpanel.track("Nope");
+            }
         })
     })
 </script>

@@ -10,11 +10,12 @@
                     <div class="form-group">
                         <div class="col-md-12 text-center">
 
-                            <p style="font-size: 1.3em"><i class="fa fa-hand-paper-o fa-2x"></i><br>Sudah siap memilih ide-ide startup yang menurutmu paling keren?</p>
+                            <p style="font-size: 1.3em">Hi, <i class="em em-raised_hands"></i>
+                                <br>Temukan inspirasi dari ratusan ide startup karya anak bangsa. Sudah siap?</p>
 
                             <div class="col-md-6 col-md-offset-3">
                                 <a href="{{ route('social.redirect') }}" class="btn btn-social btn-facebook text-center">
-                                    <span class="fa fa-facebook"></span> Masuk dengan Facebook
+                                    <span class="fa fa-facebook"></span> Masuk menggunakan Facebook
                                 </a>
                             </div>
                         </div>

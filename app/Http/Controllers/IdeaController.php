@@ -28,11 +28,15 @@ class IdeaController extends Controller
         }
     }
 
+    public function trySubmit() {
+        return view('coming_soon');
+    }
+
     public function wantMore() {
         $nextIdea = Idea::next();
 
         if (is_null($nextIdea)) {
-            return "FINISH!";
+            return view('finish')->with('idea_count', Idea::all()->count());
         } else {
             return redirect()->route('idea.show', [$nextIdea->id]);
         }
