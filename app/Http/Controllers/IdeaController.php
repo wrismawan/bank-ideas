@@ -15,7 +15,7 @@ class IdeaController extends Controller
         return view('show_idea')->with($data);
     }
 
-    public function next() {
+    public function next(Request $request) {
         $nextIdea = Idea::next();
         $countAction = UserAction::count();
 
@@ -24,7 +24,7 @@ class IdeaController extends Controller
         } else if ($countAction != 0 && $countAction % UserAction::$LIMIT == 0) {
             return view('want_more')->with('idea_count', $countAction);
         } else {
-            return redirect()->route('idea.show', [$nextIdea->id]);
+            return redirect()->route('idea.show', [$nextIdea->id])->with('message', $request->message);
         }
     }
 
@@ -47,6 +47,7 @@ class IdeaController extends Controller
         $newIdea = new Idea();
         $newIdea->name = $request->name;
         $newIdea->description = $request->description;
+        $newIdea->owner = $request->owner;
         $newIdea->save();
         return back();
     }
