@@ -15,7 +15,7 @@ class Idea extends Model
         $userActions = \App\UserAction::where('user_id', Auth::id())->get();
         $ideas = [];
         foreach ($userActions as $userAction) { array_push($ideas, $userAction->idea_id); }
-        return Idea::whereNotIn('id', $ideas)->orderBy('viewed')->first();
+        return Idea::whereNotIn('id', $ideas)->orderBy('viewed')->inRandomOrder()->first();
     }
 
 }
