@@ -36,7 +36,7 @@
 
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#">Import & Export Ideas From Excel/CSV </a>
+                        <a class="navbar-brand" href="#">Import Ideas From Excel/CSV </a>
                     </div>
                 </div>
             </nav>
@@ -62,6 +62,7 @@
                                 <th><i class="em em-broken_heart"></i></th>
                                 <th><i class="em em-eyes"></i></th>
                                 <th><i class="em em-heart"></i></th>
+                                <th>Action</th>
                             </thead>
                             <tbody>
                             @foreach($ideas as $idea)
@@ -75,6 +76,10 @@
                                 <td><?php $likeable = $idea->like == 0 ? 0 : number_format(floatval($idea->like) * 100 / floatval($idea->viewed), 2);
                                     echo "{$likeable}%";
                                 ?>
+                                </td>
+                                <td>
+                                    <a href="{{route('admin.edit',[$idea->id])}}">Edit</a>
+                                    <a href="{{route('delete.idea',[$idea->id])}}" onclick="return confirm('Beneran Mau di Delete?');">Delete</a>
                                 </td>
                             </tr>
                             @endforeach
