@@ -35,11 +35,15 @@ Route::group([], function () {
 });
 
 Route::get('/admin/bismillah100x', 'AdminController@dashboard')->name('admin.dashboard');
+Route::get('/editidea/{id}', 'AdminController@editIdea')->name('admin.edit');
+Route::get('/deleteidea/{id}', 'AdminController@deleteIdea')->name('delete.idea');
+Route::post('/idea/edit', 'AdminController@updateIdea')->name('update.idea');
 
 /* Social Auth */
 Route::get('/redirect', 'SocialAuthController@redirect')->name('social.redirect');
 Route::get('/callback', 'SocialAuthController@callback')->name('social.callback');
-Route::post('import', 'AdminController@import');
+Route::post('import', 'AdminController@import')->name('idea.import');
+
 
 /* For Experiment Purpose */
 Route::get('/test', function () {
@@ -56,5 +60,3 @@ Route::get('/forcelogout', function () {
 Route::get('/cookie/set', 'TestController@setCookie');
 Route::get('/cookie/get', 'TestController@getCookie')->name('cookie.get');
 Route::get('/cookie/clear', 'TestController@clearCookie');
-
-

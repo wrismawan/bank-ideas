@@ -39,5 +39,29 @@ class AdminController extends Controller
         } return back();
     }
 
+    public function editIdea($id){
+        $data['idea'] = Idea::find($id);
+        return view('edit_idea')->with($data);
+    }
 
+//    public function updateIdea($id)
+//    {
+//        DB::table('ideas')->where('id',$id)->update(['name','$name'],['description','description']);
+//    }
+
+    public function updateIdea(Request $request) {
+        $editIdea = Idea::find($request->id);
+//        dd($request->all());
+        $editIdea->name = $request->name;
+        $editIdea->description = $request->description;
+        $editIdea->save();
+        return redirect()->route('admin.dashboard');
+    }
+
+    public function deleteIdea(Request $request)
+    {
+        $deleteIdea = Idea::find($request->id);
+        $deleteIdea->delete();
+        return redirect()->route('admin.dashboard');
+    }
 }

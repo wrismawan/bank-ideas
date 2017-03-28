@@ -20,7 +20,7 @@
                 @endif
 
                 <div class="panel panel-default">
-                    <div class="panel-heading"><h3 class="text-center">{{$idea->name}}</h3></div>
+                    <div class="panel-heading"><span class="label label-success pull-right" style="font-size:10px">{{ Cookie::get('step') }}/{{$totalStep}}</span><h3 class="text-center">{{$idea->name}}</h3></div>
                     <div class="panel-body">
                         <p>{{$idea->description}}</p>
                         <a href="#" class="btn btn-success btn-lg col-xs-12 btn-action" data-type="like" style="margin-bottom:10px">Yep!</a>
@@ -39,14 +39,16 @@
 @push('js')
 <script>
     $(function (e) {
-        {{--mixpanel.identify("{{ Auth::user()->fb_id }}");--}}
+        mixpanel.identify("{{ Cookie::get('id') }}");
 
-        {{--mixpanel.people.set({--}}
-            {{--"$name" : "{{ Auth::user()->name }}",--}}
-            {{--"$email": "{{ Auth::user()->email }}",--}}
-            {{--"$created": "{{ Auth::user()->created_at }}",--}}
-            {{--"$last_login": new Date(),--}}
-        {{--});--}}
+        @if (Auth::check())
+        mixpanel.people.set({
+            "$name" : "{{ Auth::user()->name }}",
+            "$email": "{{ Auth::user()->email }}",
+            "$created": "{{ Auth::user()->created_at }}",
+            "$last_login": new Date(),
+        });
+        @endif
 
         $(".btn-action").click(function (e) {
             type = $(this).data('type');

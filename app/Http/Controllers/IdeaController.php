@@ -27,7 +27,9 @@ class IdeaController extends Controller
             $this->createUser($id);
         }
 
-        return redirect("idea/next?message=how-to")->withCookie(cookie('id', $id));
+        return redirect("idea/next?message=how-to")
+            ->withCookies([cookie('id', $id), cookie('step', 0)]);
+
     }
 
     private function createUser($id) {
@@ -40,9 +42,39 @@ class IdeaController extends Controller
     }
 
     public function show($id) {
+        if (Cookie::get('id') === null) {
+            return redirect()->route('idea.start');
+        }
+
         $data['idea'] = Idea::find($id);
+        $data['totalStep'] = Auth::check() ? 10 : 5;
         $this->updateCounter($id, 'viewed');
         return view('show_idea')->with($data);
+    }
+
+    private function getFunFact()
+    {
+        $funFacts = [
+            ['url_image' => 'img/funfact/1.gif', 'fact' => 'We pay salary, but we don’t take any'],
+            ['url_image' => 'img/funfact/2.gif', 'fact' => 'Mid 20’s, young and Entrepreneurs too but we don’t have a girlfriend'],
+            ['url_image' => 'img/funfact/3.gif', 'fact' => 'Talk about millions and billions when we even don’t have thousands.'],
+            ['url_image' => 'img/funfact/4.gif', 'fact' => 'Business plan document, plan about what?'],
+            ['url_image' => 'img/funfact/5.gif', 'fact' => 'We say F word more often when we become founder'],
+            ['url_image' => 'img/funfact/6.gif', 'fact' => 'Too many startup founder biographies need to be read'],
+            ['url_image' => 'img/funfact/7.gif', 'fact' => 'Felt comfortable to sleep with laptop rather than the pillow'],
+            ['url_image' => 'img/funfact/8.gif', 'fact' => 'Build startup: drive so far, in the winding road, without certain destination'],
+            ['url_image' => 'img/funfact/9.jpeg', 'fact' => ''],
+            ['url_image' => 'img/funfact/10.jpeg', 'fact' => ''],
+            ['url_image' => 'img/funfact/11.jpeg', 'fact' => ''],
+            ['url_image' => 'img/funfact/12.jpeg', 'fact' => ''],
+            ['url_image' => 'img/funfact/13.jpeg', 'fact' => ''],
+            ['url_image' => 'img/funfact/14.jpeg', 'fact' => ''],
+            ['url_image' => 'img/funfact/15.jpeg', 'fact' => '']
+        ];
+
+        $idx = rand(0,14);
+
+        return $funFacts[$idx];
     }
 
     public function next(Request $request) {
@@ -50,16 +82,29 @@ class IdeaController extends Controller
         $countAction = UserAction::count(Cookie::get('id'));
 
         if (is_null($nextIdea)) {
-            return view('finish')->with('idea_count', $countAction);
-        } else if ($countAction >= UserAction::$LIMIT && !Auth::check()) {
-            return view('need_login');
-        }else if ($countAction != 0 &&
+            return view('finish')
+                ->with('idea_count', $countAction);
+
+        } else if ($countAction >= UserAction::$TRIAL_LIMIT && !Auth::check()) {
+            return view('need_login')
+                ->withCookie('step', 0);
+
+        } else if ($countAction != 0 &&
             ($countAction % UserAction::$LIMIT) == 0 &&
-            $countAction != UserAction::$LIMIT
+            $countAction != UserAction::$TRIAL_LIMIT
         ) {
-            return view('want_more')->with('idea_count', $countAction);
+            $data['idea_count'] = $countAction;
+            $data['isFunFact'] = rand(0,1) == 1 ? true : false;
+            $data['funFact'] = $this->getFunFact();
+
+            return view('want_more')
+                ->with($data)
+                ->withCookie('step', 0);
         } else {
-            return redirect()->route('idea.show', [$nextIdea->id])->with('message', $request->message);
+            $step = intval(Cookie::get('step'));
+            return redirect()->route('idea.show', [$nextIdea->id])
+                ->with('message', $request->message)
+                ->withCookie('step', $step+1);
         }
     }
 

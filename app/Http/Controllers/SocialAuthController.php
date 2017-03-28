@@ -24,7 +24,7 @@ class SocialAuthController extends Controller
 
         Auth::login($user);
 
-        return redirect('idea/next');
+        return redirect('idea/next')->withCookie('step', 0);;
     }
 
     private function updateUser($providerUser) {

@@ -30,9 +30,11 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="panel panel-default">
                     <div class="panel-body text-center">
-                        <h3><i class="em em-white_check_mark"></i></h3>
-                        <p>Kamu sudah melihat <span class="idea-count">{{$idea_count}} ide</span>! <i class="em em---1"></i><br>
+                        <img src="https://media1.giphy.com/media/l0MYxef0mpdcnQnvi/giphy.gif" width="100%" style="margin-bottom: 10px"/>
+                        <p>Mantap! Kamu sudah melihat <span class="idea-count">{{$idea_count}} ide</span>! <i class="em em---1"></i><br>
                             Terima kasih sudah melihat semuanya<i class="em em-blush"></i></p>
+
+                        <p style="margin-bottom: 10px; text-de"></p>
                         <a href="{{ route('idea.try') }}" class="try">Mau submit ide juga doong.</a>
 
                         <div class="row" style="margin-top: 20px;">
