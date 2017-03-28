@@ -14,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
     }
 
     /**
@@ -27,7 +27,7 @@ class HomeController extends Controller
         if (Auth::check()) {
             return redirect()->route('idea.next');
         } else {
-            return redirect('/');
+            return redirect('/welcome');
         }
     }
 }

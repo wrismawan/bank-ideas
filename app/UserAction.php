@@ -9,9 +9,9 @@ class UserAction extends Model
 {
     protected $table = "user_actions";
 
-    public static $LIMIT = 5;
+    public static $LIMIT = 2;
 
-    public static function count() {
-        return UserAction::where('user_id', Auth::id())->count();
+    public static function count($user_id) {
+        return UserAction::where('user_id', $user_id)->count();
     }
 }

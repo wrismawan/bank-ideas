@@ -39,14 +39,14 @@
 @push('js')
 <script>
     $(function (e) {
-        mixpanel.identify("{{ Auth::user()->fb_id }}");
+        {{--mixpanel.identify("{{ Auth::user()->fb_id }}");--}}
 
-        mixpanel.people.set({
-            "$name" : "{{ Auth::user()->name }}",
-            "$email": "{{ Auth::user()->email }}",
-            "$created": "{{ Auth::user()->created_at }}",
-            "$last_login": new Date(),
-        });
+        {{--mixpanel.people.set({--}}
+            {{--"$name" : "{{ Auth::user()->name }}",--}}
+            {{--"$email": "{{ Auth::user()->email }}",--}}
+            {{--"$created": "{{ Auth::user()->created_at }}",--}}
+            {{--"$last_login": new Date(),--}}
+        {{--});--}}
 
         $(".btn-action").click(function (e) {
             type = $(this).data('type');

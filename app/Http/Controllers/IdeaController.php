@@ -3,12 +3,42 @@
 namespace App\Http\Controllers;
 
 use App\Idea;
+use App\User;
 use App\UserAction;
+use App\Uuids;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
+use Webpatser\Uuid\Uuid;
 
 class IdeaController extends Controller
 {
+    public function start(Request $request) {
+
+        if (Cookie::get('id') === null) {
+            $id = \Ramsey\Uuid\Uuid::uuid4()->toString();
+        } else {
+            $id = Cookie::get('id');
+        }
+
+        $user = User::find($id);
+        if (is_null($user)) {
+            $this->createUser($id);
+        }
+
+        return redirect("idea/next?message=how-to")->withCookie(cookie('id', $id));
+    }
+
+    private function createUser($id) {
+        $user = new User();
+        $user->id = $id;
+        $user->name = str_random(10);
+        $user->password = bcrypt(str_random(10));
+        $user->save();
+        return $user;
+    }
+
     public function show($id) {
         $data['idea'] = Idea::find($id);
         $this->updateCounter($id, 'viewed');
@@ -16,12 +46,17 @@ class IdeaController extends Controller
     }
 
     public function next(Request $request) {
-        $nextIdea = Idea::next();
-        $countAction = UserAction::count();
+        $nextIdea = Idea::next(Cookie::get('id'));
+        $countAction = UserAction::count(Cookie::get('id'));
 
         if (is_null($nextIdea)) {
             return view('finish')->with('idea_count', $countAction);
-        } else if ($countAction != 0 && $countAction % UserAction::$LIMIT == 0) {
+        } else if ($countAction >= UserAction::$LIMIT && !Auth::check()) {
+            return view('need_login');
+        }else if ($countAction != 0 &&
+            ($countAction % UserAction::$LIMIT) == 0 &&
+            $countAction != UserAction::$LIMIT
+        ) {
             return view('want_more')->with('idea_count', $countAction);
         } else {
             return redirect()->route('idea.show', [$nextIdea->id])->with('message', $request->message);
@@ -32,8 +67,18 @@ class IdeaController extends Controller
         return view('coming_soon');
     }
 
+    public function needLogin() {
+        return view('need_login');
+    }
+
+    public function funFact(Request $request) {
+
+        $countAction = UserAction::where('user_id', Cookie::get('id'))->count();
+        return view('want_more')->with('idea_count', $countAction);
+    }
+
     public function wantMore() {
-        $nextIdea = Idea::next();
+        $nextIdea = Idea::next(Cookie::get('id'));
 
         if (is_null($nextIdea)) {
             return view('finish')->with('idea_count', Idea::all()->count());
@@ -75,11 +120,9 @@ class IdeaController extends Controller
 
     private function addAction($idea_id, $value) {
         $action = new UserAction();
-        $action->user_id = Auth::id();
+        $action->user_id = Cookie::get('id');
         $action->idea_id = $idea_id;
         $action->val = $value;
         $action->save();
     }
-
-
 }
