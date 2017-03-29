@@ -13,7 +13,9 @@
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', function () {
+    return view('landing_page');
+});
 
 Route::get('/idea/start', 'IdeaController@start')->name('idea.start');
 

@@ -5,6 +5,11 @@
         .panel-body p {
             font-size: 1.2em;
         }
+
+        .info {
+            margin-top: 10px;
+            text-align: center;
+        }
     </style>
 @endpush
 
@@ -20,7 +25,14 @@
                 @endif
 
                 <div class="panel panel-default">
-                    <div class="panel-heading"><span class="label label-success pull-right" style="font-size:10px">{{ Cookie::get('step') }}/{{$totalStep}}</span><h3 class="text-center">{{$idea->name}}</h3></div>
+                    <div class="panel-heading">
+
+                        <span class="label label-danger pull-right" style="font-size:10px; margin-left:3px"><i class="fa fa-star"></i> {{ $countAction }}pts</span>
+                        <span class="label label-success pull-right" style="font-size:10px"><i class="fa fa-refresh"></i> {{ $countAction % \App\UserAction::$LIMIT + 1}}/{{$totalStep}}</span>
+
+                        <h3 class="text-center" style="margin-top">{{$idea->name}}</h3>
+
+                    </div>
                     <div class="panel-body">
                         <p>{{$idea->description}}</p>
                         <a href="#" class="btn btn-success btn-lg col-xs-12 btn-action" data-type="like" style="margin-bottom:10px">Yep!</a>
@@ -30,6 +42,7 @@
                         {!! csrf_field() !!}
                         <input type="text" name="id" value="{{$idea->id}}">
                     </form>
+
                 </div>
             </div>
         </div>
