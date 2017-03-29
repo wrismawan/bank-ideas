@@ -26,7 +26,7 @@
 @push('js')
 <script>
     $(function() {
-        mixpanel.track("Login Page");
+        mixpanel.track("Landing Page");
 
         $(".btn-facebook").click(function() {
             mixpanel.track("Click FB Button");
