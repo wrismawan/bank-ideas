@@ -32,6 +32,7 @@ class IdeaController extends Controller
 
     }
 
+
     private function createUser($id) {
         $user = new User();
         $user->id = $id;
@@ -132,15 +133,6 @@ class IdeaController extends Controller
 
     }
 
-    public function store(Request $request) {
-        $newIdea = new Idea();
-        $newIdea->name = $request->name;
-        $newIdea->description = $request->description;
-        $newIdea->owner = $request->owner;
-        $newIdea->save();
-        return back();
-    }
-
     public function like(Request $request) {
         $this->updateCounter($request->id, 'like');
         return redirect()->route('idea.next');
@@ -169,4 +161,6 @@ class IdeaController extends Controller
         $action->val = $value;
         $action->save();
     }
+
+
 }

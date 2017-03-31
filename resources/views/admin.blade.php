@@ -9,7 +9,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">Your Awesome Idea</div>
-                    <form action="{{ route('idea.store') }}" method="POST">
+                    <form action="{{ route('admin.ideastore') }}" method="POST">
                         {!! csrf_field() !!}
                         <div class="panel-body">
                             <div class="form-group">
@@ -55,13 +55,14 @@
                     <div class="panel-body">
                         <table class="table table-responsive" id="ideas-table">
                             <thead>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th><i class="em em-boy"></i></th>
-                                <th><i class="em em-white_check_mark"></i></th>
-                                <th><i class="em em-broken_heart"></i></th>
-                                <th><i class="em em-eyes"></i></th>
-                                <th><i class="em em-heart"></i></th>
+                                <th style="width: 10%">Name</th>
+                                <th style="width: 35%">Description</th>
+                                <th style="width: 5%"><i class="em em-boy"></i></th>
+                                <th style="width: 5%"><i class="em em-white_check_mark"></i></th>
+                                <th style="width: 5%"><i class="em em-broken_heart"></i></th>
+                                <th style="width: 5%"><i class="em em-eyes"></i></th>
+                                <th style="width: 5%"><i class="em em-heart"></i></th>
+                                <th style="width: 5%"><i class="em em-ballot_box_with_check"></i></th>
                                 <th>Action</th>
                             </thead>
                             <tbody>
@@ -77,9 +78,10 @@
                                     echo "{$likeable}%";
                                 ?>
                                 </td>
+                                <td>{{$idea->status}}</td>
                                 <td>
-                                    <a href="{{route('admin.edit',[$idea->id])}}">Edit</a>
-                                    <a href="{{route('delete.idea',[$idea->id])}}" onclick="return confirm('Beneran Mau di Delete?');">Delete</a>
+                                    <a href="{{route('admin.updateidea',[$idea->id])}}">Edit</a>
+                                    <a href="{{route('admin.deleteidea',[$idea->id])}}" onclick="return confirm('Beneran Mau di Delete?');">Delete</a>
                                 </td>
                             </tr>
                             @endforeach

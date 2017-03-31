@@ -24,7 +24,6 @@ Route::get('/welcome', function () {
 });
 
 Route::group([], function () {
-    Route::post('/idea/store', 'IdeaController@store')->name('idea.store');
     Route::post('/idea/like/', 'IdeaController@like')->name('idea.like');
     Route::post('/idea/skip/', 'IdeaController@skip')->name('idea.skip');
     Route::get('/idea/next', 'IdeaController@next')->name('idea.next');
@@ -33,13 +32,14 @@ Route::group([], function () {
     Route::get('/idea/checkpoint', 'IdeaController@needLogin')->name('idea.needlogin');
     Route::get('/idea/try', 'IdeaController@trySubmit')->name('idea.try');
     Route::get('/idea/{id}', 'IdeaController@show')->name('idea.show');
-
 });
 
 Route::get('/admin/bismillah100x', 'AdminController@dashboard')->name('admin.dashboard');
-Route::get('/editidea/{id}', 'AdminController@editIdea')->name('admin.edit');
-Route::get('/deleteidea/{id}', 'AdminController@deleteIdea')->name('delete.idea');
-Route::post('/idea/edit', 'AdminController@updateIdea')->name('update.idea');
+Route::get('/updateidea/{id}', 'AdminController@editIdea')->name('admin.updateidea');
+Route::get('/deleteidea/{id}', 'AdminController@deleteIdea')->name('admin.deleteidea');
+Route::post('/admin/ideaedit', 'AdminController@updateIdea')->name('update.idea');
+Route::post('/admin/ideastore', 'IdeaController@store')->name('admin.ideastore');
+Route::get('/admin/infoboard', 'AdminController@infoBoard')->name('admin.infoboard');
 
 /* Social Auth */
 Route::get('/redirect', 'SocialAuthController@redirect')->name('social.redirect');
@@ -62,3 +62,7 @@ Route::get('/forcelogout', function () {
 Route::get('/cookie/set', 'TestController@setCookie');
 Route::get('/cookie/get', 'TestController@getCookie')->name('cookie.get');
 Route::get('/cookie/clear', 'TestController@clearCookie');
+
+//User
+Route::get('/user/ideaedit', 'UserController@editIdea')->name('user.ideaedit');
+Route::post('/user/ideastore', 'UserController@storeIdea')->name('user.ideastore');

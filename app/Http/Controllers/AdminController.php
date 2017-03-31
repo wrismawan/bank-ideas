@@ -41,19 +41,27 @@ class AdminController extends Controller
 
     public function editIdea($id){
         $data['idea'] = Idea::find($id);
-        return view('edit_idea')->with($data);
+
+        return view('update_idea')->with($data);
     }
 
-//    public function updateIdea($id)
-//    {
-//        DB::table('ideas')->where('id',$id)->update(['name','$name'],['description','description']);
-//    }
+    //*Next, fungsi store dan update Idea buat admin bisa di merge
+
+    public function store(Request $request) {
+        $newIdea->name = $request->name;
+        $newIdea->description = $request->description;
+        $newIdea->owner = $request->owner;
+        //$newIdea->status = $request->status;
+        $newIdea->save();
+        return back();
+    }
 
     public function updateIdea(Request $request) {
         $editIdea = Idea::find($request->id);
-//        dd($request->all());
         $editIdea->name = $request->name;
         $editIdea->description = $request->description;
+        $editIdea->owner = $request->owner;
+        //$editIdea->status = $request->status;
         $editIdea->save();
         return redirect()->route('admin.dashboard');
     }
@@ -63,5 +71,45 @@ class AdminController extends Controller
         $deleteIdea = Idea::find($request->id);
         $deleteIdea->delete();
         return redirect()->route('admin.dashboard');
+    }
+
+    public function infoBoard()
+    {
+        $data['reg_total'] = DB::table('users')->where('fb_id','<>','NULL')->count();
+        $data['reg_today'] = DB::table('users')->where('fb_id','<>','NULL')->whereRaw('created_at <= date_sub(curdate(), INTERVAL 0 day)')->count();
+        $data['reg_yesterday'] = DB::table('users')->where('fb_id','<>','NULL')->whereRaw('created_at <= date_sub(curdate(), INTERVAL 1 day)')->count();
+
+        $data['unique_total'] = DB::table('users')->count();
+        $data['unique_today'] = DB::table('users')->whereRaw('created_at <= date_sub(curdate(), INTERVAL 0 day)')->count();
+        $data['unique_yesterday'] = DB::table('users')->whereRaw('created_at <= date_sub(curdate(), INTERVAL 1 day)')->count();
+
+        $data['last_reg_users'] = DB::table('users')->where('fb_id','<>','NULL')->orderBy('created_at','desc')->limit(5)->get();
+
+//        $users = DB::table('users')
+//            ->join('contacts', 'users.id', '=', 'contacts.user_id')
+//            ->join('orders', 'users.id', '=', 'orders.user_id')
+//            ->select('users.*', 'contacts.phone', 'orders.price')
+//            ->get();
+
+//        DB::table('users')
+//            ->select('users.id','users.name','profiles.photo')
+//            ->join('profiles','profiles.id','=','users.id')->where(['something' => 'something', 'otherThing' => 'otherThing'])->get();
+
+//        select u.name, COUNT(ua.id) as ctr FROM user_actions ua, users u WHERE u.id = ua.user_id GROUP BY user_id HAVING ctr >= 5
+
+//        $data['min_five_vote'] = DB::table('users')
+//            ->join('user_actions','user_actions.user_id', '=', 'user_actions.user_id')
+//            ->select('users.*', 'user_actions.users.id', 'user_actions.user_id')
+//            ->groupby('user_actions.user_id')
+//            ->count(['users.id']);
+//
+//        dd($data['min_five_vote']);
+//        dd(DB::select(DB::raw('select u.name, COUNT(ua.id) as ctr FROM user_actions ua, users u WHERE u.id = ua.user_id GROUP BY user_id HAVING ctr >= 5'))->get()) ;
+        dd(DB::table('users')
+            ->join('user_actions','user_actions.user_id', '=', 'user_actions.user_id')
+            ->select(DB::raw('select u.name, COUNT(ua.id) as ctr FROM user_actions ua, users u WHERE u.id = ua.user_id GROUP BY user_id HAVING ctr >= 5'))
+            ->get()) ;
+
+        return view('information_board')->with($data);
     }
 }

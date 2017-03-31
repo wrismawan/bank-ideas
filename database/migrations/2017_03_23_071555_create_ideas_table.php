@@ -21,6 +21,7 @@ class CreateIdeasTable extends Migration
             $table->integer('like')->default(0);
             $table->integer('skip')->default(0);
             $table->integer('viewed')->default(0);
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }
