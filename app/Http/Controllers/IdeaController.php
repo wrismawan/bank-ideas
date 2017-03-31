@@ -28,7 +28,7 @@ class IdeaController extends Controller
         }
 
         return redirect("idea/next?message=how-to")
-            ->withCookies([cookie('id', $id)]);
+            ->withCookie(cookie()->forever('id', $id));
 
     }
 

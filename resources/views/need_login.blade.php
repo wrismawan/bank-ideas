@@ -12,7 +12,7 @@
                                 <p>
                                     Ingin memilih lebih banyak ide lainnya dan dapat update tentang ide mana yang akan dieksekusi?</p>
                                 <div class="col-md-12">
-                                    <a href="{{ route('social.redirect') }}" class="btn btn-social btn-facebook text-center">
+                                    <a href="{{ route('social.redirect') }}" class="btn btn-block btn-social btn-facebook text-center">
                                         <span class="fa fa-facebook"></span> Masuk menggunakan Facebook
                                     </a>
                                 <p style="font-size: 9px; margin-top:10px">Tenang, kami tidak akan mengirim spam dan menyalahgunakan email kamu <i class="em em-blush"></i></p>

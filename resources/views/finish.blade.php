@@ -31,7 +31,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body text-center">
                         <img src="https://media1.giphy.com/media/l0MYxef0mpdcnQnvi/giphy.gif" width="100%" style="margin-bottom: 10px"/>
-                        <p>Mantap! Kamu sudah melihat <span class="idea-count">{{$idea_count}} ide</span>! <i class="em em---1"></i><br>
+                        <p>Mantap! Kamu sudah melihat <span class="idea-count">{{$countAction}} ide</span>! <i class="em em---1"></i><br>
                             Terima kasih sudah melihat semuanya<i class="em em-blush"></i></p>
 
                         <p style="margin-bottom: 10px; text-de"></p>
