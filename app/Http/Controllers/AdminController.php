@@ -85,11 +85,38 @@ class AdminController extends Controller
 
         $data['last_reg_users'] = DB::table('users')->where('fb_id','<>','NULL')->orderBy('created_at','desc')->limit(5)->get();
 
+//        $users = DB::table('users')
+//            ->join('contacts', 'users.id', '=', 'contacts.user_id')
+//            ->join('orders', 'users.id', '=', 'orders.user_id')
+//            ->select('users.*', 'contacts.phone', 'orders.price')
+//            ->get();
 
-        dd(DB::table('users')
-            ->join('user_actions','user_actions.user_id', '=', 'user_actions.user_id')
-            ->select(DB::raw('select u.name, COUNT(ua.id) as ctr FROM user_actions ua, users u WHERE u.id = ua.user_id GROUP BY user_id HAVING ctr >= 5'))
-            ->get()) ;
+//        DB::table('users')
+//            ->select('users.id','users.name','profiles.photo')
+//            ->join('profiles','profiles.id','=','users.id')->where(['something' => 'something', 'otherThing' => 'otherThing'])->get();
+
+//        select u.name, COUNT(ua.id) as ctr FROM user_actions ua, users u WHERE u.id = ua.user_id GROUP BY user_id HAVING ctr >= 5
+
+//        $data['min_five_vote'] = DB::table('users')
+//            ->join('user_actions','user_actions.user_id', '=', 'user_actions.user_id')
+//            ->select('users.*', 'user_actions.users.id', 'user_actions.user_id')
+//            ->groupby('user_actions.user_id')
+//            ->count(['users.id']);
+//
+//        dd($data['min_five_vote']);
+//        dd(DB::select(DB::raw('select u.id, COUNT(ua.id) as ctr FROM user_actions ua, users u WHERE u.id = ua.user_id GROUP BY user_id HAVING ctr >= 5'))) ;
+//        dd(DB::table('users')
+            //->join('users','users.id','=','users.id')
+//            //->join('user_actions','user_actions.user_id', '=', 'user_actions.user_id')
+//            ->select(DB::raw('select u.name, COUNT(ua.id) as ctr FROM user_actions ua, users u WHERE u.id = ua.user_id GROUP BY user_id HAVING ctr >= 5'))
+//            ->count()) ;
+
+
+        dd(DB::table('users')->foreign('user_id')->references('id')->on('users')
+            ->select('users.name')
+            ->join('user_actions','user_actions.user_id','=','users.id')
+            ->where(DB::raw('count(*) users.id'))
+            ->get());
 
         return view('information_board')->with($data);
     }
