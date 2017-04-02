@@ -42,8 +42,14 @@
                         {!! csrf_field() !!}
                         <input type="text" name="id" value="{{$idea->id}}">
                     </form>
-
                 </div>
+
+                <div class="fb-comments"
+                     data-href="{{ route('idea.show', [$idea->id]) }}"
+                     data-numposts="5"
+                     data-width="100%">
+                </div>
+
             </div>
         </div>
     </div>
