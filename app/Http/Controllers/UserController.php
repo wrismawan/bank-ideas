@@ -25,13 +25,12 @@ class UserController extends Controller
             'owner' => 'required|email'
         ]);
 
-
         $newIdea->name = $request->name;
         $newIdea->description = $request->description;
         $newIdea->owner = $request->owner;
         //$newIdea->status = $request->status;
         $newIdea->save();
-        return redirect()->route('idea.next');
+        return redirect()->route('idea.next')->with('message','Yeay!, Terimakasih ide kamu sudah diterima :)');
     }
 
 }

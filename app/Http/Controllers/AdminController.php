@@ -110,11 +110,19 @@ class AdminController extends Controller
 //            ->count(['users.id']);
 //
 //        dd($data['min_five_vote']);
-//        dd(DB::select(DB::raw('select u.name, COUNT(ua.id) as ctr FROM user_actions ua, users u WHERE u.id = ua.user_id GROUP BY user_id HAVING ctr >= 5'))->get()) ;
-        dd(DB::table('users')
-            ->join('user_actions','user_actions.user_id', '=', 'user_actions.user_id')
-            ->select(DB::raw('select u.name, COUNT(ua.id) as ctr FROM user_actions ua, users u WHERE u.id = ua.user_id GROUP BY user_id HAVING ctr >= 5'))
-            ->get()) ;
+//        dd(DB::select(DB::raw('select u.id, COUNT(ua.id) as ctr FROM user_actions ua, users u WHERE u.id = ua.user_id GROUP BY user_id HAVING ctr >= 5'))) ;
+//        dd(DB::table('users')
+            //->join('users','users.id','=','users.id')
+//            //->join('user_actions','user_actions.user_id', '=', 'user_actions.user_id')
+//            ->select(DB::raw('select u.name, COUNT(ua.id) as ctr FROM user_actions ua, users u WHERE u.id = ua.user_id GROUP BY user_id HAVING ctr >= 5'))
+//            ->count()) ;
+
+
+        dd(DB::table('users')->foreign('user_id')->references('id')->on('users')
+            ->select('users.name')
+            ->join('user_actions','user_actions.user_id','=','users.id')
+            ->where(DB::raw('count(*) users.id'))
+            ->get());
 
         return view('information_board')->with($data);
     }
