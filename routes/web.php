@@ -47,14 +47,6 @@ Route::get('/callback', 'SocialAuthController@callback')->name('social.callback'
 Route::post('import', 'AdminController@import')->name('idea.import');
 
 
-/* For Experiment Purpose */
-Route::get('/test', function () {
-    $userActions = \App\UserAction::where('user_id', 1)->get();
-    $ideas = [];
-    return \App\Idea::whereNotIn('id', $ideas)->orderBy('viewed')->inRandomOrder()->first();
-    return $ideas;
-});
-
 Route::get('/forcelogout', function () {
     Auth::logout();
 });

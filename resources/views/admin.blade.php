@@ -7,6 +7,15 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
+                <h3>
+                    <span class="label label-danger">Unique: {{$unique_session}}</span>
+                    <span class="label label-info">Voted Min. 1x: {{$voters_1x}}</span>
+
+                </h3>
+                <h3>
+                    <span class="label label-success">Voted Min. 5x: {{$voters_5x}}</span>
+                    <span class="label label-warning">Signed In: {{$signed_in}}</span>
+                </h3><br>
                 <div class="panel panel-default">
                     <div class="panel-heading">Your Awesome Idea</div>
                     <form action="{{ route('admin.ideastore') }}" method="POST">
@@ -74,8 +83,13 @@
                                 <td>{{$idea->like}}</td>
                                 <td>{{$idea->skip}}</td>
                                 <td>{{$idea->viewed}}</td>
-                                <td><?php $likeable = $idea->like == 0 ? 0 : number_format(floatval($idea->like) * 100 / floatval($idea->viewed), 2);
-                                    echo "{$likeable}%";
+                                <td><?php
+                                    if ($idea->skip == 0) {
+                                        echo "100%";
+                                    } else {
+                                        $likeable = $idea->like == 0 ? 0 : number_format(floatval($idea->like) * 100 / floatval($idea->skip), 2);
+                                        echo "{$likeable}%";
+                                    }
                                 ?>
                                 </td>
                                 <td>{{$idea->status}}</td>

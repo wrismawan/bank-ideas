@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Idea;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
@@ -13,6 +14,11 @@ class AdminController extends Controller
     public function dashboard(Request $request) {
 
         $data['ideas'] = Idea::all();
+
+        $data['unique_session'] = User::all()->count();
+        $data['voters_5x'] = $this->countVote(5);
+        $data['voters_1x'] = $this->countVote(1);
+        $data['signed_in'] = User::where('fb_id', '<>', NULL)->count();
 
         return view('admin')->with($data);
 
@@ -111,5 +117,14 @@ class AdminController extends Controller
             ->get()) ;
 
         return view('information_board')->with($data);
+    }
+
+    /* Private Function */
+    private function countVote($minVote = 5) {
+        return DB::table('user_actions')
+            ->select(DB::raw('count(user_id)'))
+            ->groupBy('user_id')
+            ->havingRaw("count(user_id) >= {$minVote}")
+            ->get()->count();
     }
 }
